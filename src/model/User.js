@@ -1,9 +1,10 @@
 import mongoose from 'mongoose';
 
-const userSchema = new mongoose.Schema({
+const UserSchema = new mongoose.Schema({
     username: {
         type: String,
-        required: [true, "username is required"]
+        required: [true, "username is required"],
+        unique: true
     },
     password: {
         type: String,
@@ -11,7 +12,8 @@ const userSchema = new mongoose.Schema({
     },
     email: {
         type: String,
-        required: [true, "email is required"]
+        required: [true, "email is required"],
+        unique: true
     },
     fname: {
         type: String,
@@ -45,14 +47,12 @@ const userSchema = new mongoose.Schema({
         type: Array,
         default: []
     },
-    createdAt: {
-        type: Date,
-        default: Date.now
-    },
-    updatedAt: {
-        type: Date,
-        default: Date.now
+    profilePicUrl: {
+        type: String,
+        default: '/user/default.png'
     }
+}, {
+    timestamps: true
 });
 
-mongoose.model('User', userSchema);
+mongoose.model('User', UserSchema);

@@ -1,6 +1,7 @@
 require('dotenv').config()
 import express from 'express';
 import logger from 'morgan';
+import bodyParser from 'body-parser';
 import mongoose from 'mongoose';
 import requireDir from 'require-dir';
 
@@ -11,12 +12,10 @@ mongoose.connect(process.env.DATABASE_CONNECTION_STRING, { useNewUrlParser: true
     console.log('connected to database!')
 });
 
-console.log(
-    requireDir('./model')
-);
+requireDir('./model')
 
-const Game = mongoose.model('Game');
-
+app.use(bodyParser.urlencoded({ extended: false }))
+app.use(bodyParser.json())
 app.use(logger('dev'));
 
 app.use('/api', require('./routes'));

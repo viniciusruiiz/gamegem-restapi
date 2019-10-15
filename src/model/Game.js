@@ -1,7 +1,7 @@
 import mongoose from 'mongoose';
 import mongoosePaginate from 'mongoose-paginate';
 
-const gameSchema = new mongoose.Schema({
+const GameSchema = new mongoose.Schema({
     name: {
         type: String,
         required: true
@@ -29,16 +29,14 @@ const gameSchema = new mongoose.Schema({
         type: Date,
         required: false
     },
-    createdAt: {
-        type: Date,
-        default: Date.now
-    },
-    updatedAt: {
-        type: Date,
-        default: Date.now
+    gamePicUrl: {
+        type: String,
+        default: '/game/default.png'
     }
+}, {
+    timestamps: true
 });
 
-gameSchema.plugin(mongoosePaginate);
+GameSchema.plugin(mongoosePaginate);
 
-mongoose.model('Game', gameSchema);
+mongoose.model('Game', GameSchema);

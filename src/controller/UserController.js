@@ -1,4 +1,5 @@
 import mongoose from 'mongoose';
+import parseBody from '../utils/parseBody';
 
 const User = mongoose.model('User');
 
@@ -16,7 +17,15 @@ export default {
     },
 
     async register(req, res) {
-        const user = await User.create(req.body);
+        let body = parseBody(req.body)
+
+        //TODO: encrypt password logic
+
+        const user = await User.create(req.body).catch(err => {
+            //DO LOGIC ABOUT ENV
+            console.log(err)
+            return res.send(err).status(400);
+        });
 
         return res.json(user);
     },
@@ -28,7 +37,9 @@ export default {
     },
 
     async update(req, res) {
-        const user = await User.findByIdAndUpdate(req.params.id, req.body, { new: true });
+        let body = parseBody(req.body)
+
+        const user = await User.findByIdAndUpdate(req.params.id, body, { new: true });
 
         return res.json(user);
     }

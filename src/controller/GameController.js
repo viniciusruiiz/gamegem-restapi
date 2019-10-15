@@ -1,10 +1,13 @@
 import mongoose from 'mongoose';
+import parseBody from '../utils/parseBody';
 
 const Game = mongoose.model('Game');
 
 export default {
     async findAll(req, res) {
-        const games = await Game.find();
+        const { page = 1, limit = 10 } = req.query
+
+        const games = await Game.paginate({}, { page, limit });
 
         return res.json(games);
     },
@@ -16,7 +19,9 @@ export default {
     },
 
     async add(req, res) {
-        const game = await Game.create(req.body);
+        let body = parseBody(req.body)
+
+        const game = await Game.create(body);
 
         return res.json(game);
     },
@@ -28,7 +33,9 @@ export default {
     },
 
     async update(req, res) {
-        const game = await Game.findByIdAndUpdate(req.params.id, req.body, { new: true });
+        let body = parseBody(req.body)
+
+        const game = await Game.findByIdAndUpdate(req.params.id, body, { new: true });
 
         return res.json(game);
     }
