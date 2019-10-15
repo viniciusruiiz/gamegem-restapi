@@ -1,3 +1,7 @@
 export default (body) => {
-    return typeof body === 'string' ? JSON.parse(body) : body;
+    try {
+        return typeof body === 'string' ? JSON.parse(body) : body;
+    } catch {
+        return body;
+    }
 }

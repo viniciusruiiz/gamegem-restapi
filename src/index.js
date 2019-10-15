@@ -9,13 +9,13 @@ const port = process.env.PORT || 3000;
 const app = express();
 
 mongoose.connect(process.env.DATABASE_CONNECTION_STRING, { useNewUrlParser: true, useUnifiedTopology: true  }).then(() => {
-    console.log('connected to database!')
+    console.log('connected to database!');
 });
 
-requireDir('./model')
+requireDir('./model');
 
-app.use(bodyParser.urlencoded({ extended: false }))
-app.use(bodyParser.json())
+app.use(bodyParser.urlencoded({ extended: false }));
+app.use(bodyParser.json());
 app.use(logger('dev'));
 
 app.use('/api', require('./routes'));
